@@ -27,23 +27,23 @@ player.on('connectionError', (queue, error) => {
 });
 
 player.on('trackStart', (queue, track) => {
-  queue.metadata.send(`▶ | Started playing: **${track.title}** in **${queue.connection.channel.name}**!`);
+  queue.metadata.send(`**( ▶ ) - Começou a tocar**: **${track.title}** dentro **${queue.connection.channel.name}**!`);
 });
 
 player.on('trackAdd', (queue, track) => {
-  queue.metadata.send(`🎶 | Track **${track.title}** queued!`);
+  queue.metadata.send(`**( 🎶 ) - Acompanhar** **${track.title}** na fila!**`);
 });
 
 player.on('botDisconnect', queue => {
-  queue.metadata.send('❌ | I was manually disconnected from the voice channel, clearing queue!');
+  queue.metadata.send('**( ❌ ) - Fui desconectado manualmente do canal de voz, limpando a fila!**');
 });
 
 player.on('channelEmpty', queue => {
-  queue.metadata.send('❌ | Nobody is in the voice channel, leaving...');
+  queue.metadata.send('**( ❌ ) - Ninguém está no canal de voz, deixando...**');
 });
 
 player.on('queueEnd', queue => {
-  queue.metadata.send('✅ | Queue finished!');
+  queue.metadata.send('**( ✅ ) - Fila finalizada**!');
 });
 
 client.once('ready', async () => {
@@ -73,7 +73,7 @@ client.on('messageCreate', async message => {
         message.reply('Deployed!');
       })
       .catch(err => {
-        message.reply('Could not deploy commands! Make sure the bot has the application.commands permission!');
+        message.reply('Não foi possível implantar comandos! Verifique se o bot tem a permissão application.commands!');
         console.error(err);
       });
   }
