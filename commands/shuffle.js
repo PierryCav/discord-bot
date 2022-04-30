@@ -2,11 +2,11 @@ const {GuildMember} = require('discord.js');
 
 module.exports = {
   name: 'shuffle',
-  description: 'shuffle the queue!',
+  description: 'embaralhe a fila!',
   async execute(interaction, player) {
     if (!(interaction.member instanceof GuildMember) || !interaction.member.voice.channel) {
       return void interaction.reply({
-        content: 'You are not in a voice channel!',
+        content: 'Você não está em um canal de voz!',
         ephemeral: true,
       });
     }
@@ -16,23 +16,23 @@ module.exports = {
       interaction.member.voice.channelId !== interaction.guild.me.voice.channelId
     ) {
       return void interaction.reply({
-        content: 'You are not in my voice channel!',
+        content: '**( ❌ ) - Você não está no meu canal de voz!**',
         ephemeral: true,
       });
     }
 
     await interaction.deferReply();
     const queue = player.getQueue(interaction.guildId);
-    if (!queue || !queue.playing) return void interaction.followUp({content: '❌ | No music is being played!'});
+    if (!queue || !queue.playing) return void interaction.followUp({content: '**( ❌ ) - Nenhuma música está sendo tocada!**'});
     try {
       queue.shuffle();
       trimString = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
       return void interaction.followUp({
         embeds: [
           {
-            title: 'Now Playing',
+            title: 'Em reprodução',
             description: trimString(
-              `The Current song playing is 🎶 | **${queue.current.title}**! \n 🎶 | ${queue}! `,
+              `A música atual que está tocando é 🎶 | **${queue.current.title}**! \n 🎶 | ${queue}! `,
               4095,
             ),
           },
@@ -41,7 +41,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       return void interaction.followUp({
-        content: '❌ | Something went wrong!',
+        content: '**( ❌ ) - Algo deu errado!**',
       });
     }
   },
