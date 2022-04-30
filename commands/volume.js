@@ -2,19 +2,19 @@ const {GuildMember} = require('discord.js');
 
 module.exports = {
   name: 'volume',
-  description: 'Change the volume!',
+  description: 'Alterar o volume!',
   options: [
     {
       name: 'volume',
       type: 4, // 'INTEGER' Type
-      description: 'Number between 0-200',
+      description: 'Número entre 0-200',
       required: true,
     },
   ],
   async execute(interaction, player) {
     if (!(interaction.member instanceof GuildMember) || !interaction.member.voice.channel) {
       return void interaction.reply({
-        content: 'You are not in a voice channel!',
+        content: '**( ❌ ) - Você não está em um canal de voz!**',
         ephemeral: true,
       });
     }
@@ -24,7 +24,7 @@ module.exports = {
       interaction.member.voice.channelId !== interaction.guild.me.voice.channelId
     ) {
       return void interaction.reply({
-        content: 'You are not in my voice channel!',
+        content: '**( ❌ ) - Você não está no meu canal de voz!**',
         ephemeral: true,
       });
     }
@@ -33,7 +33,7 @@ module.exports = {
     const queue = player.getQueue(interaction.guildId);
     if (!queue || !queue.playing)
       return void interaction.followUp({
-        content: '❌ | No music is being played!',
+        content: '**( ❌ ) - Nenhuma música está sendo tocada**!',
       });
 
     var volume = interaction.options.get('volume').value;
@@ -42,7 +42,7 @@ module.exports = {
     const success = queue.setVolume(volume);
 
     return void interaction.followUp({
-      content: success ? `🔊 | Volume set to ${volume}!` : '❌ | Something went wrong!',
+      content: success ? `**( 🔊 ) - Volume definido para ${volume}**!` : '**( ❌ ) - Algo deu errado!**',
     });
   },
 };
