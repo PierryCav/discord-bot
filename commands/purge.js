@@ -1,11 +1,11 @@
 module.exports = {
   name: 'purge',
-  description: 'Delete the last messages in all chats.',
+  description: 'Apague as últimas mensagens em todos os chats.',
   options: [
     {
       name: 'num',
       type: 4, //'INTEGER' Type
-      description: 'The number of messages you want to delete. (max 100)',
+      description: 'O número de mensagens que você deseja excluir. (máximo 100)',
       required: true,
     },
   ],
@@ -14,7 +14,7 @@ module.exports = {
 
     if (!deleteCount || deleteCount < 2 || deleteCount > 100) {
       return void interaction.reply({
-        content: `Please provide a number between 2 and 100 for the number of messages to delete`,
+        content: `**( ❌ ) - Forneça um número entre 2 e 100 para o número de mensagens a serem excluídas**`,
         ephemeral: true,
       });
     }
@@ -27,13 +27,13 @@ module.exports = {
       .bulkDelete(fetched)
       .then(() => {
         interaction.reply({
-          content: `Succesfully deleted messages`,
+          content: `Mensagens excluídas com sucesso`,
           ephemeral: true,
         });
       })
       .catch(error => {
         interaction.reply({
-          content: `Couldn't delete messages because of: ${error}`,
+          content: `**( ❌ ) - Não foi possível excluir mensagens devido a: ${error}`,
           ephemeral: true,
         });
       });
