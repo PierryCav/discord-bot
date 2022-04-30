@@ -2,11 +2,11 @@ const {GuildMember} = require('discord.js');
 
 module.exports = {
   name: 'skip',
-  description: 'Skip a song!',
+  description: 'Pule uma música!',
   async execute(interaction, player) {
     if (!(interaction.member instanceof GuildMember) || !interaction.member.voice.channel) {
       return void interaction.reply({
-        content: 'You are not in a voice channel!',
+        content: '**( ❌ ) - Você não está em um canal de voz!**',
         ephemeral: true,
       });
     }
@@ -16,18 +16,18 @@ module.exports = {
       interaction.member.voice.channelId !== interaction.guild.me.voice.channelId
     ) {
       return void interaction.reply({
-        content: 'You are not in my voice channel!',
+        content: '**( ❌ ) - Você não está no meu canal de voz!**',
         ephemeral: true,
       });
     }
 
     await interaction.deferReply();
     const queue = player.getQueue(interaction.guildId);
-    if (!queue || !queue.playing) return void interaction.followUp({content: '❌ | No music is being played!'});
+    if (!queue || !queue.playing) return void interaction.followUp({content: '**( ❌ ) - Nenhuma música está sendo tocada!**'});
     const currentTrack = queue.current;
     const success = queue.skip();
     return void interaction.followUp({
-      content: success ? `✅ | Skipped **${currentTrack}**!` : '❌ | Something went wrong!',
+      content: success ? `**( ✅ ) - Ignorado** **${currentTrack}**!` : '**( ❌ ) - Algo deu errado!**',
     });
   },
 };
